@@ -2,7 +2,7 @@ package com.javalab.clothshop;
 
 import com.javalab.clothshop.model.User;
 import com.javalab.clothshop.repository.UserRepository;
-import com.javalab.clothshop.service.user.AllUsersRetrievalServiceImpl;
+import com.javalab.clothshop.repository.exception.UserNotFoundException;
 import com.javalab.clothshop.service.user.UserRemovalServiceImpl;
 import com.javalab.clothshop.service.user.UserRetrievalServiceImpl;
 import com.javalab.clothshop.service.user.UserSavingServiceImpl;
@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -34,8 +35,6 @@ public class TestCrudServicesUser {
     UserSavingServiceImpl userSavingService;
     @InjectMocks
     UserRemovalServiceImpl userRemovalService;
-    @InjectMocks
-    AllUsersRetrievalServiceImpl allUsersRetrievalService;
 
     private User user = User.builder()
             .username("bastion")
@@ -70,7 +69,7 @@ public class TestCrudServicesUser {
 
     @Test
     public void test_removeById() {
-        userRemovalService.removeById(1L);
+        userRemovalService.removeById(2L);
         verify(userRepository, times(1)).deleteById(anyLong());
     }
 
@@ -79,8 +78,14 @@ public class TestCrudServicesUser {
         List<User> userList = new ArrayList<>();
         userList.add(user);
         when(userRepository.findAll()).thenReturn(userList);
-        List<User> retrieved = allUsersRetrievalService.retrieveAll();
+        List<User> retrieved = userRetrievalService.retrieveAll();
         assertEquals(1, retrieved.size());
         assertTrue(retrieved.contains(user));
+    }
+
+    @Test
+    public void test_throwsUserNotFound() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(UserNotFoundException.class, () -> userRetrievalService.retrieveById(2L));
     }
 }

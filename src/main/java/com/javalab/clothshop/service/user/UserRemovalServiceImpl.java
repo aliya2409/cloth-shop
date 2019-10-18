@@ -1,6 +1,7 @@
 package com.javalab.clothshop.service.user;
 
 import com.javalab.clothshop.repository.UserRepository;
+import com.javalab.clothshop.repository.exception.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,10 @@ public class UserRemovalServiceImpl implements UserRemovalService {
 
     @Override
     public void removeById(Long id) {
-        userRepository.deleteById(id);
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        } else {
+            throw new UserNotFoundException("Could not find user with id: " + id);
+        }
     }
 }
