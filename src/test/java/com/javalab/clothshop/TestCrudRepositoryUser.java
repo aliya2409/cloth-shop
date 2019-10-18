@@ -11,7 +11,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @Import(ClothShopApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class TestJpaUser {
+public class TestCrudRepositoryUser {
 
     @Autowired
     private UserRepository userRepository;
@@ -43,6 +46,13 @@ public class TestJpaUser {
     public void test_getUserById() {
         Optional<User> retrieved = userRepository.findById(user.getId());
         assertEquals(user, retrieved.get());
+    }
+
+    @Test
+    public void test_getAllUsers() {
+        List<User> userList = StreamSupport.stream(userRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+        assertTrue(userList.contains(user));
     }
 
     @Test

@@ -1,7 +1,11 @@
 package com.javalab.clothshop;
 
 import com.javalab.clothshop.model.*;
-import com.javalab.clothshop.repository.*;
+import com.javalab.clothshop.repository.CategoryRepository;
+import com.javalab.clothshop.service.order.OrderSavingService;
+import com.javalab.clothshop.service.product.ProductSavingService;
+import com.javalab.clothshop.service.user.UserSavingService;
+import com.javalab.clothshop.service.vendor.VendorSavingService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,11 +17,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class DataLoader implements CommandLineRunner {
 
-    UserRepository userRepository;
-    VendorRepository vendorRepository;
+    UserSavingService userSavingService;
+    VendorSavingService vendorSavingService;
     CategoryRepository categoryRepository;
-    ProductRepository productRepository;
-    OrderRepository orderRepository;
+    ProductSavingService productSavingService;
+    OrderSavingService orderSavingService;
 
     public static void main(String[] args) {
         SpringApplication.run(DataLoader.class, args);
@@ -31,11 +35,11 @@ public class DataLoader implements CommandLineRunner {
 
         Vendor vendor = new Vendor();
         vendor.setName("Guandzhou");
-        vendorRepository.save(vendor);
+        vendorSavingService.save(vendor);
 
         Product product = Product.builder()
                 .name("Mi Band 3").price(5000).quantity(2).category(category).vendor(vendor).build();
-        productRepository.save(product);
+        productSavingService.save(product);
 
         User user = User.builder()
                 .username("bastion")
@@ -45,7 +49,7 @@ public class DataLoader implements CommandLineRunner {
                 .password("password")
                 .phone("+74951234567")
                 .build();
-        userRepository.save(user);
+        userSavingService.save(user);
 
         Order order = Order.builder()
                 .complete(false)
@@ -54,6 +58,6 @@ public class DataLoader implements CommandLineRunner {
                 .status(OrderStatus.PLACED)
                 .user(user)
                 .item(product).build();
-        orderRepository.save(order);
+        orderSavingService.save(order);
     }
 }
