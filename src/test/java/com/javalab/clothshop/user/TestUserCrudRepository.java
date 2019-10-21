@@ -1,5 +1,6 @@
-package com.javalab.clothshop;
+package com.javalab.clothshop.user;
 
+import com.javalab.clothshop.ClothShopApplication;
 import com.javalab.clothshop.model.User;
 import com.javalab.clothshop.repository.UserRepository;
 import org.junit.Before;
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @Import(ClothShopApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class TestCrudRepositoryUser {
+public class TestUserCrudRepository {
 
     @Autowired
     private UserRepository userRepository;

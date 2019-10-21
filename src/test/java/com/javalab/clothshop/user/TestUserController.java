@@ -1,4 +1,4 @@
-package com.javalab.clothshop;
+package com.javalab.clothshop.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest
 @MockBeans({@MockBean(UserRemovalService.class), @MockBean(UserRetrievalService.class),
         @MockBean(UserSavingService.class), @MockBean(OrderSavingService.class)})
-public class TestControllerUser {
+public class TestUserController {
 
     @Autowired
     UserRetrievalService userRetrievalService;

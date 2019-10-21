@@ -2,6 +2,7 @@ package com.javalab.clothshop;
 
 import com.javalab.clothshop.model.*;
 import com.javalab.clothshop.repository.CategoryRepository;
+import com.javalab.clothshop.service.category.CategorySavingService;
 import com.javalab.clothshop.service.order.OrderSavingService;
 import com.javalab.clothshop.service.product.ProductSavingService;
 import com.javalab.clothshop.service.user.UserSavingService;
@@ -19,7 +20,7 @@ public class DataLoader implements CommandLineRunner {
 
     UserSavingService userSavingService;
     VendorSavingService vendorSavingService;
-    CategoryRepository categoryRepository;
+    CategorySavingService categorySavingService;
     ProductSavingService productSavingService;
     OrderSavingService orderSavingService;
 
@@ -31,7 +32,7 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Category category = new Category();
         category.setName("Electronics");
-        categoryRepository.save(category);
+        categorySavingService.save(category);
 
         Vendor vendor = new Vendor();
         vendor.setName("Guandzhou");

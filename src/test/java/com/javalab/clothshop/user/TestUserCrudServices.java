@@ -1,4 +1,4 @@
-package com.javalab.clothshop;
+package com.javalab.clothshop.user;
 
 import com.javalab.clothshop.model.User;
 import com.javalab.clothshop.repository.UserRepository;
@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestCrudServicesUser {
+public class TestUserCrudServices {
 
     @Mock
     UserRepository userRepository;

@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Vendor extends BaseEntity {
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
     @Singular
