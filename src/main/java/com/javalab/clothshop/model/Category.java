@@ -18,6 +18,7 @@ public class Category extends BaseEntity {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
+    // TODO: Does @Singular have any effect if used without @Builder?
     @Singular
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
