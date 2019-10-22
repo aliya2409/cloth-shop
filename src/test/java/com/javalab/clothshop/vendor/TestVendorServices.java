@@ -1,33 +1,30 @@
 package com.javalab.clothshop.vendor;
 
+import com.javalab.clothshop.model.Product;
 import com.javalab.clothshop.model.Vendor;
 import com.javalab.clothshop.repository.VendorRepository;
 import com.javalab.clothshop.repository.exception.NameTakenException;
 import com.javalab.clothshop.service.vendor.VendorRemovalServiceImpl;
 import com.javalab.clothshop.service.vendor.VendorRetrievalServiceImpl;
 import com.javalab.clothshop.service.vendor.VendorSavingServiceImpl;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class TestVendorServices {
 
     @Mock
@@ -39,12 +36,17 @@ public class TestVendorServices {
     @InjectMocks
     VendorRetrievalServiceImpl vendorRetrievalService;
     private Vendor vendor;
+    private Product product;
 
-    @Before
+    @BeforeEach
     public void setup() {
         vendor = new Vendor();
         vendor.setName("White swan");
         vendor.setId(1L);
+        product = Product.builder().vendor(vendor).name("Cup").quantity(10).price(100).build();
+        List<Product> products = new ArrayList<>();
+        products.add(product);
+        vendor.setProducts(products);
     }
 
     @Test

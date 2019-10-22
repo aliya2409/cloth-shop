@@ -3,23 +3,22 @@ package com.javalab.clothshop.user;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.javalab.clothshop.model.Order;
-import com.javalab.clothshop.model.OrderStatus;
-import com.javalab.clothshop.model.Product;
-import com.javalab.clothshop.model.User;
+import com.javalab.clothshop.controller.UserController;
+import com.javalab.clothshop.model.*;
 import com.javalab.clothshop.service.order.OrderSavingService;
 import com.javalab.clothshop.service.user.UserRemovalService;
 import com.javalab.clothshop.service.user.UserRetrievalService;
 import com.javalab.clothshop.service.user.UserSavingService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.MockBeans;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
@@ -33,8 +32,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest
+@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
+@WebMvcTest(controllers = UserController.class)
 @MockBeans({@MockBean(UserRemovalService.class), @MockBean(UserRetrievalService.class),
         @MockBean(UserSavingService.class), @MockBean(OrderSavingService.class)})
 public class TestUserController {
@@ -52,15 +52,14 @@ public class TestUserController {
     MockMvc mockMvc;
     private Order order;
     private User user;
-    private Product product;
+    private OrderItem item;
     private String json;
 
-    @Before
+    @BeforeEach
     public void setup() {
-        product = Product.builder()
-                .name("Mi Band 3").price(5000).quantity(2).build();
+        item = new OrderItem();
         order = Order.builder()
-                .item(product)
+                .item(item)
                 .createdAt(LocalDateTime.now())
                 .shipDate(LocalDateTime.now())
                 .status(OrderStatus.PLACED).build();
@@ -131,7 +130,7 @@ public class TestUserController {
     @Test
     public void whenPostOrder_thenOk() throws Exception {
         Order orderToPost = Order.builder()
-                .item(product)
+                .item(item)
                 .createdAt(LocalDateTime.now())
                 .shipDate(LocalDateTime.now())
                 .status(OrderStatus.PLACED).build();

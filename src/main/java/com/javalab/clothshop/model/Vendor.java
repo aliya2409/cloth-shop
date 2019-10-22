@@ -1,5 +1,6 @@
 package com.javalab.clothshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,5 +20,6 @@ public class Vendor extends BaseEntity {
     private String name;
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
     @Singular
+    @JsonIgnore
     private List<Product> products;
 }

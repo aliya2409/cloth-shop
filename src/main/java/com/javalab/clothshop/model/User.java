@@ -1,5 +1,6 @@
 package com.javalab.clothshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,5 +29,6 @@ public class User extends BaseEntity {
     private String phone;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Singular
+    @JsonIgnore
     private List<Order> orders;
 }

@@ -1,7 +1,6 @@
 package com.javalab.clothshop;
 
 import com.javalab.clothshop.model.*;
-import com.javalab.clothshop.repository.CategoryRepository;
 import com.javalab.clothshop.service.category.CategorySavingService;
 import com.javalab.clothshop.service.order.OrderSavingService;
 import com.javalab.clothshop.service.product.ProductSavingService;
@@ -52,13 +51,17 @@ public class DataLoader implements CommandLineRunner {
                 .build();
         userSavingService.save(user);
 
+        OrderItem item = new OrderItem();
+        item.setProduct(product);
+        item.setQuantity(1);
+
         Order order = Order.builder()
                 .complete(false)
                 .createdAt(LocalDateTime.now())
                 .shipDate(LocalDateTime.now())
                 .status(OrderStatus.PLACED)
                 .user(user)
-                .item(product).build();
+                .item(item).build();
         orderSavingService.save(order);
     }
 }

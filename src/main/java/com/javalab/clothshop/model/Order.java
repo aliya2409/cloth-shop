@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Order extends BaseEntity {
 
     @Column(name = "ship_date", nullable = false)
@@ -25,13 +25,8 @@ public class Order extends BaseEntity {
     @Column(name = "complete", nullable = false)
     private boolean complete;
     @Singular
-    @ManyToMany
-    @JoinTable(
-            name = "ORDER_PRODUCT",
-            joinColumns = { @JoinColumn(name = "ORDERS.id") },
-            inverseJoinColumns = { @JoinColumn(name = "PRODUCTS.id") }
-    )
-    private List<Product> items;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    private List<OrderItem> items;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

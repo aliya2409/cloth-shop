@@ -5,27 +5,22 @@ import com.javalab.clothshop.repository.CategoryRepository;
 import com.javalab.clothshop.repository.exception.NameTakenException;
 import com.javalab.clothshop.service.category.CategoryRetrievalServiceImpl;
 import com.javalab.clothshop.service.category.CategorySavingServiceImpl;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class TestCategoryServices {
 
     @Mock
@@ -36,7 +31,7 @@ public class TestCategoryServices {
     CategoryRetrievalServiceImpl categoryRetrievalService;
     private Category category;
 
-    @Before
+    @BeforeEach
     public void setup() {
         category = new Category();
         category.setName("Utensils");
