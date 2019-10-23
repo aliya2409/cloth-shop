@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.javalab.clothshop.controller.UserController;
-import com.javalab.clothshop.model.*;
+import com.javalab.clothshop.model.Order;
+import com.javalab.clothshop.model.OrderItem;
+import com.javalab.clothshop.model.OrderStatus;
+import com.javalab.clothshop.model.User;
 import com.javalab.clothshop.service.order.OrderSavingService;
 import com.javalab.clothshop.service.user.UserRemovalService;
 import com.javalab.clothshop.service.user.UserRetrievalService;
@@ -35,8 +38,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(controllers = UserController.class)
-@MockBeans({@MockBean(UserRemovalService.class), @MockBean(UserRetrievalService.class),
-        @MockBean(UserSavingService.class), @MockBean(OrderSavingService.class)})
+@MockBean(UserRemovalService.class)
+@MockBean(UserRetrievalService.class)
+@MockBean(UserSavingService.class)
+@MockBean(OrderSavingService.class)
 public class TestUserController {
 
     @Autowired
@@ -143,7 +148,7 @@ public class TestUserController {
         mockMvc.perform(post("/users/1/orders").contentType(MediaType.APPLICATION_JSON_UTF8).content(json))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.status").value(orderToPost.getStatus()));
+                .andExpect(jsonPath("$.status").value(orderToPost.getStatus().name()));
         //java.lang.AssertionError: JSON path "$.status"
         //        Expected :PLACED
         //        Actual   :PLACED

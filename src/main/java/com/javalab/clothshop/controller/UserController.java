@@ -50,6 +50,9 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    // TODO: While next two methods are perfectly OK within Rest API design, it does smell bad if we're thinking SOLID.
+    //  Recommendation here is to have a dedicated class for entity's properties operations where "/entities/{id}/properties"
+    //  could be root API template, e.g. here it is "/users/{id}/orders"
     @GetMapping("/{id}/orders")
     public List<Order> getOrders(@PathVariable Long id) {
         return userRetrievalService.retrieveById(id).getOrders();
