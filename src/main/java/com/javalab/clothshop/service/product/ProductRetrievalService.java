@@ -9,4 +9,6 @@ public interface ProductRetrievalService {
     Product retrieveById(Long id);
 
     List<Product> retrieveAll();
+
+    void existsById(Long id);
 }

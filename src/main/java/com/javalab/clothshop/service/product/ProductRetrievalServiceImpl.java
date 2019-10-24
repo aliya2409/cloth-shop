@@ -26,4 +26,11 @@ public class ProductRetrievalServiceImpl implements ProductRetrievalService {
         return StreamSupport.stream(productRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public void existsById(Long id) {
+        if(!productRepository.existsById(id)) {
+            throw new ProductNotFoundException("Could not find product with id: " + id);
+        }
+    }
 }
