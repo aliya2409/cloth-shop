@@ -1,12 +1,11 @@
 package com.javalab.clothshop.repository;
 
-import com.javalab.clothshop.model.Order;
 import com.javalab.clothshop.model.OrderItem;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface OrderItemRepository extends CrudRepository<OrderItem, Long> {
+public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
-    List<OrderItem> findAllByOrder(Order order);
+    List<OrderItem> findAllByOrderId(Long orderId);
 }

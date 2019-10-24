@@ -1,13 +1,13 @@
 package com.javalab.clothshop.controller;
 
-import com.javalab.clothshop.model.Order;
 import com.javalab.clothshop.model.User;
-import com.javalab.clothshop.service.order.OrderSavingService;
 import com.javalab.clothshop.service.user.UserRemovalService;
 import com.javalab.clothshop.service.user.UserRetrievalService;
 import com.javalab.clothshop.service.user.UserSavingService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +21,6 @@ public class UserController {
     private final UserRetrievalService userRetrievalService;
     private final UserRemovalService userRemovalService;
     private final UserSavingService userSavingService;
-    private final OrderSavingService orderSavingService;
-
 
     @GetMapping
     public List<User> getAll() {
@@ -47,21 +45,8 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable Long id) {
         userRemovalService.removeById(id);
-        return new ResponseEntity(HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        return new ResponseEntity(null, headers, HttpStatus.OK);
     }
-
-    // TODO: While next two methods are perfectly OK within Rest API design, it does smell bad if we're thinking SOLID.
-    //  Recommendation here is to have a dedicated class for entity's properties operations where "/entities/{id}/properties"
-    //  could be root API template, e.g. here it is "/users/{id}/orders"
-    @GetMapping("/{id}/orders")
-    public List<Order> getOrders(@PathVariable Long id) {
-        return userRetrievalService.retrieveById(id).getOrders();
-    }
-
-    @PostMapping("/{id}/orders")
-    public Order createOrder(@PathVariable Long id, @RequestBody Order order) {
-        order.setUser(userRetrievalService.retrieveById(id));
-        return orderSavingService.save(order);
-    }
-
 }

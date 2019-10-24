@@ -5,7 +5,9 @@ import com.javalab.clothshop.service.product.ProductRemovalService;
 import com.javalab.clothshop.service.product.ProductRetrievalService;
 import com.javalab.clothshop.service.product.ProductSavingService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +45,8 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable Long id) {
         productRemovalService.removeById(id);
-        return new ResponseEntity(HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        return new ResponseEntity(null, headers, HttpStatus.OK);
     }
 }

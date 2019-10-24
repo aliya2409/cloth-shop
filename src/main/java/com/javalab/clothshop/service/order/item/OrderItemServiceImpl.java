@@ -1,6 +1,5 @@
 package com.javalab.clothshop.service.order.item;
 
-import com.javalab.clothshop.model.Order;
 import com.javalab.clothshop.model.OrderItem;
 import com.javalab.clothshop.repository.OrderItemRepository;
 import com.javalab.clothshop.repository.exception.OrderItemNotFoundException;
@@ -26,8 +25,8 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public List<OrderItem> retrieveAll(Order order) {
-        return orderItemRepository.findAllByOrder(order);
+    public List<OrderItem> retrieveAllByOrderId(Long orderId) {
+        return orderItemRepository.findAllByOrderId(orderId);
     }
 
     @Override

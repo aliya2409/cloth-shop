@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.javalab.clothshop.controller.UserController;
+import com.javalab.clothshop.controller.UserOrdersController;
 import com.javalab.clothshop.model.Order;
 import com.javalab.clothshop.model.OrderItem;
 import com.javalab.clothshop.model.OrderStatus;
@@ -37,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @ExtendWith(MockitoExtension.class)
-@WebMvcTest(controllers = UserController.class)
+@WebMvcTest(controllers = {UserController.class, UserOrdersController.class})
 @MockBean(UserRemovalService.class)
 @MockBean(UserRetrievalService.class)
 @MockBean(UserSavingService.class)
@@ -149,8 +150,5 @@ public class TestUserController {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.status").value(orderToPost.getStatus().name()));
-        //java.lang.AssertionError: JSON path "$.status"
-        //        Expected :PLACED
-        //        Actual   :PLACED
     }
 }

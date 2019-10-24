@@ -4,8 +4,10 @@ import com.javalab.clothshop.model.Category;
 import com.javalab.clothshop.repository.CategoryRepository;
 import com.javalab.clothshop.repository.exception.CategoryNotFoundException;
 import lombok.AllArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -17,8 +19,11 @@ public class CategoryRetrievalServiceImpl implements CategoryRetrievalService {
     private final CategoryRepository categoryRepository;
 
     @Override
+    @Transactional
     public Category retrieveById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Could not find category with id: " + id));
+        Category category =  categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Could not find category with id: " + id));
+        Hibernate.initialize(category.getProducts());
+        return category;
     }
 
     @Override

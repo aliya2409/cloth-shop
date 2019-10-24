@@ -54,8 +54,6 @@ public class TestUserCrudServices {
         User userToSave = new User();
         userToSave.setEmail(user.getEmail());
         User saved = userSavingService.save(userToSave);
-        // TODO: just a tip: get used to hamcrest matchers as standard assertions are usually discouraged
-        //  on the projects due to being insufficiently informative in most situations
         assertEquals(user.getEmail(), saved.getEmail());
     }
 

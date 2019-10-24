@@ -27,8 +27,7 @@ public class OrderSavingServiceImpl implements OrderSavingService {
     @Override
     @Transactional
     public Order save(Order order) {
-        checkInventory(order).getItems().forEach(item -> updateProduct(item.getProduct().getId(), item));
-        order.getItems().stream().peek(i -> i.setOrder(order)).forEach(orderItemService::save);
+        checkInventory(order).getItems().stream().peek(i -> i.setOrder(order)).forEach(orderItemService::save);
         return orderRepository.save(order);
     }
 
@@ -43,6 +42,7 @@ public class OrderSavingServiceImpl implements OrderSavingService {
         }
     }
 
+    // this should be in purchase method when an order is approved
     private void updateProduct(Long productId, OrderItem ordered) {
         Product retrieved = productRetrievalService.retrieveById(productId);
         retrieved.setQuantity(retrieved.getQuantity() - ordered.getQuantity());

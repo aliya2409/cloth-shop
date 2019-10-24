@@ -5,8 +5,6 @@ import com.javalab.clothshop.model.Product;
 import com.javalab.clothshop.service.category.CategoryRetrievalService;
 import com.javalab.clothshop.service.category.CategorySavingService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,14 +23,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody Category category) {
-        categorySavingService.save(category);
-        return new ResponseEntity(HttpStatus.OK);
+    public Category create(@RequestBody Category category) {
+        return categorySavingService.save(category);
     }
 
     @GetMapping("/{id}")
     public Category getById(@PathVariable Long id) {
-        return  categoryRetrievalService.retrieveById(id);
+        return categoryRetrievalService.retrieveById(id);
     }
 
     @GetMapping("/{id}/products")
