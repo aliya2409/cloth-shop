@@ -45,8 +45,8 @@ public class DataLoader implements CommandLineRunner {
                 .username("bastion")
                 .firstName("Vincent")
                 .lastName("Guerrero")
-                .email("vince.@mail.com")
-                .password("password")
+                .email("aliya2409@gmail.com")
+                .password("$2y$12$2FCSV902ZDQpk/rp08kUXu5EgCQlXdrHrkNwEgChjUOJ3fyuZzYnq") //"password"
                 .phone("+74951234567")
                 .build();
         userSavingService.save(user);

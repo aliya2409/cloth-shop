@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface UserRetrievalService {
 
-    User retrieveById(Long id);
+    User retrieveBy(Long id);
+
+    User retrieveBy(String email);
+
     List<User> retrieveAll();
 }

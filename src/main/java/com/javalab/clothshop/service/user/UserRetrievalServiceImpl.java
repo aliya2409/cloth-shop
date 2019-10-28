@@ -20,8 +20,15 @@ public class UserRetrievalServiceImpl implements UserRetrievalService {
 
     @Override
     @Transactional
-    public User retrieveById(Long id) {
+    public User retrieveBy(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Could not find user with id: " + id));
+        Hibernate.initialize(user.getOrders());
+        return user;
+    }
+
+    @Override
+    public User retrieveBy(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("Could not find user with email: " + email));
         Hibernate.initialize(user.getOrders());
         return user;
     }

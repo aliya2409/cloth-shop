@@ -18,12 +18,12 @@ public class UserOrdersController {
 
     @GetMapping
     public List<Order> getOrders(@PathVariable Long id) {
-        return userRetrievalService.retrieveById(id).getOrders();
+        return userRetrievalService.retrieveBy(id).getOrders();
     }
 
     @PostMapping
     public Order createOrder(@PathVariable Long id, @RequestBody Order order) {
-        order.setUser(userRetrievalService.retrieveById(id));
+        order.setUser(userRetrievalService.retrieveBy(id));
         return orderSavingService.save(order);
     }
 }

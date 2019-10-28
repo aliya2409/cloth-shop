@@ -20,7 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockBeans;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -82,7 +81,7 @@ public class TestUserController {
 
     @Test
     public void whenGetUser_thenOK() throws Exception {
-        when(userRetrievalService.retrieveById(anyLong())).thenReturn(user);
+        when(userRetrievalService.retrieveBy(anyLong())).thenReturn(user);
         mockMvc.perform(get("/users/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -125,7 +124,7 @@ public class TestUserController {
 
     @Test
     public void whenGetOrder_thenOk() throws Exception {
-        when(userRetrievalService.retrieveById(anyLong())).thenReturn(user);
+        when(userRetrievalService.retrieveBy(anyLong())).thenReturn(user);
         mockMvc.perform(get("/users/1/orders"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -141,7 +140,7 @@ public class TestUserController {
                 .shipDate(LocalDateTime.now())
                 .status(OrderStatus.PLACED).build();
         when(orderSavingService.save(any(Order.class))).thenReturn(orderToPost);
-        when(userRetrievalService.retrieveById(anyLong())).thenReturn(user);
+        when(userRetrievalService.retrieveBy(anyLong())).thenReturn(user);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.registerModule(new JavaTimeModule());

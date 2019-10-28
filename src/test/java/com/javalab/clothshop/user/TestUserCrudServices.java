@@ -61,7 +61,7 @@ public class TestUserCrudServices {
     public void test_retrieveById() {
         Long id = user.getId();
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
-        User retrieved = userRetrievalService.retrieveById(id);
+        User retrieved = userRetrievalService.retrieveBy(id);
         assertEquals(user, retrieved);
     }
 
@@ -84,6 +84,6 @@ public class TestUserCrudServices {
     @Test
     public void test_throwsUserNotFound() {
         when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
-        assertThrows(UserNotFoundException.class, () -> userRetrievalService.retrieveById(2L));
+        assertThrows(UserNotFoundException.class, () -> userRetrievalService.retrieveBy(2L));
     }
 }
