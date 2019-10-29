@@ -1,6 +1,5 @@
 package com.javalab.clothshop.security;
 
-import com.javalab.clothshop.service.user.UserRetrievalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,8 +12,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     CustomOAuth2UserService customOAuth2UserService;
-    @Autowired
-    UserRetrievalService userRetrievalService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

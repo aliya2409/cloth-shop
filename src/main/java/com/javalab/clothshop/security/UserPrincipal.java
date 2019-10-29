@@ -1,6 +1,8 @@
 package com.javalab.clothshop.security;
 
 import com.javalab.clothshop.model.User;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,20 +13,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
+@Getter
 public class UserPrincipal implements OAuth2User, UserDetails {
 
-    private Long id;
-    private String email;
-    private String password;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Long id;
+    private final String email;
+    private final String firstName;
+    private final String lastName;
+    private final String phone;
+    private final String password;
+    private final Collection<? extends GrantedAuthority> authorities;
     private Map<String, Object> attributes;
-
-    public UserPrincipal(Long id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-    }
 
     public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = Collections.
@@ -33,6 +33,9 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         return new UserPrincipal(
                 user.getId(),
                 user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhone(),
                 user.getPassword(),
                 authorities
         );
@@ -42,14 +45,6 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         UserPrincipal userPrincipal = UserPrincipal.create(user);
         userPrincipal.setAttributes(attributes);
         return userPrincipal;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     @Override
@@ -92,7 +87,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
         return attributes;
     }
 
-    public void setAttributes(Map<String, Object> attributes) {
+    private void setAttributes(Map<String, Object> attributes) {
         this.attributes = attributes;
     }
 
