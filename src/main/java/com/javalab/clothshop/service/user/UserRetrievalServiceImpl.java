@@ -27,6 +27,7 @@ public class UserRetrievalServiceImpl implements UserRetrievalService {
     }
 
     @Override
+    @Transactional
     public User retrieveBy(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("Could not find user with email: " + email));
         Hibernate.initialize(user.getOrders());
