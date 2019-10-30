@@ -33,7 +33,7 @@ public class Order extends BaseEntity {
     private boolean complete;
     @Singular
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "user_id")

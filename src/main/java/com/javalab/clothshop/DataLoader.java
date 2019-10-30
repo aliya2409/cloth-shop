@@ -3,6 +3,7 @@ package com.javalab.clothshop;
 import com.javalab.clothshop.model.*;
 import com.javalab.clothshop.service.category.CategorySavingService;
 import com.javalab.clothshop.service.order.OrderSavingService;
+import com.javalab.clothshop.service.product.ProductRetrievalService;
 import com.javalab.clothshop.service.product.ProductSavingService;
 import com.javalab.clothshop.service.user.UserSavingService;
 import com.javalab.clothshop.service.vendor.VendorSavingService;
@@ -21,6 +22,7 @@ public class DataLoader implements CommandLineRunner {
     VendorSavingService vendorSavingService;
     CategorySavingService categorySavingService;
     ProductSavingService productSavingService;
+    ProductRetrievalService productRetrievalService;
     OrderSavingService orderSavingService;
 
     public static void main(String[] args) {
@@ -28,7 +30,14 @@ public class DataLoader implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
+        final int count = productRetrievalService.retrieveAll().size();
+        if (count == 0) {
+            loadData();
+        }
+    }
+
+    private void loadData() {
         Category category = new Category();
         category.setName("Electronics");
         categorySavingService.save(category);
@@ -38,8 +47,8 @@ public class DataLoader implements CommandLineRunner {
         vendorSavingService.save(vendor);
 
         Product product = Product.builder()
-                .name("Mi Band 3").price(5000).quantity(2).category(category).vendor(vendor).build();
-        productSavingService.save(product);
+                .name("Mi Band 3").price(5000).quantity(10).category(category).vendor(vendor).build();
+        product = productSavingService.save(product);
 
         User user = User.builder()
                 .username("bastion")
