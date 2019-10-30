@@ -17,7 +17,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class OrderItem extends BaseEntity {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
     @ManyToOne
